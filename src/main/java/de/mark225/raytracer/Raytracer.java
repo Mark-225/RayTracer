@@ -114,6 +114,23 @@ public class Raytracer {
         return intersection.distance() < delta.length();
     }
 
+    public Scene getScene() {
+        return scene;
+    }
 
+    public Color getSkyColor() {
+        return skyColor;
+    }
 
+    public int getResX() {
+        return resX;
+    }
+
+    public int getResY() {
+        return resY;
+    }
+
+    public int getMaxBounces() {
+        return maxBounces;
+    }
 }
