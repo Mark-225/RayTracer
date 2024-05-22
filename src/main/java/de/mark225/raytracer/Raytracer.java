@@ -59,7 +59,7 @@ public class Raytracer {
 
     private Color traceOneRay(Vector3d origin, Vector3d direction, int depth){
         if(depth >= maxBounces) return null;
-        Intersection intersection = firstIntersection(origin, direction);
+        Intersection intersection = firstIntersection(origin, direction, false);
         if(intersection == null) return skyColor;
         MaterialProperties materialProperties = intersection.object().getMaterialProperties();
         float localWeight = 0;
@@ -94,22 +94,14 @@ public class Raytracer {
         return new Color(vector.x(), vector.y(), vector.z());
     }
 
-    private Intersection firstIntersection(Vector3d origin, Vector3d direction){
-        double minDistance = Double.MAX_VALUE;
-        Intersection minIntersection = null;
-        for(SceneObject object : scene.objects()){
-            Intersection intersection = object.getIntersection(origin, direction);
-            if(intersection != null && intersection.distance() < minDistance && intersection.distance() > 0) {
-                minIntersection = intersection;
-                minDistance = intersection.distance();
-            }
-        }
-        return minIntersection;
+    private Intersection firstIntersection(Vector3d origin, Vector3d direction, boolean simple){
+        return scene.sceneModel().firstIntersection(origin, direction, simple);
     }
+
 
     public boolean isObstructed(Vector3d origin, Vector3d destination){
         Vector3d delta = destination.sub(origin);
-        Intersection intersection = firstIntersection(origin, delta.normalize());
+        Intersection intersection = firstIntersection(origin, delta.normalize(), true);
         if(intersection == null) return false;
         return intersection.distance() < delta.length();
     }

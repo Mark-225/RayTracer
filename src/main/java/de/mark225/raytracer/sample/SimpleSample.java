@@ -9,6 +9,7 @@ import de.mark225.raytracer.objects.primitives.Plane;
 import de.mark225.raytracer.objects.primitives.Sphere;
 import de.mark225.raytracer.scene.Camera;
 import de.mark225.raytracer.scene.Scene;
+import de.mark225.raytracer.scenemodel.SimpleSceneModel;
 import org.spongepowered.math.vector.Vector3d;
 
 import javax.imageio.ImageIO;
@@ -28,7 +29,7 @@ public class SimpleSample {
         LightSource lightSource = new LightSource(new Vector3d(5, 6, -2), new Color(100, 100, 100), new Color(50, 50, 50), new Color(10, 10, 10));
         Vector3d cameraPosition = new Vector3d(0, 4, -5);
         Camera camera = new Camera(cameraPosition, Vector3d.UP, new Vector3d(0, 3, -2.5), (float) Math.toRadians(45), (float) Math.toRadians(45));
-        Scene scene = new Scene(camera, List.of(lightSource), new PhongLighting(new LightSource[]{lightSource}), new SceneObject[]{plane, sphere, smallSphere, yellowSphere});
+        Scene scene = new Scene(camera, List.of(lightSource), new PhongLighting(new LightSource[]{lightSource}), new SimpleSceneModel(List.of(plane, sphere, smallSphere, yellowSphere)));
         Raytracer raytracer = new Raytracer(scene, new Color(0, 100, 220), 1000, 1000, 10);
         BufferedImage bi = raytracer.render();
         File f = new File("output.png");
